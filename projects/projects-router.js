@@ -39,19 +39,19 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const foundProject = await db.getProjectById(req.params.id);
+    const actions = await db.getProjectActions(req.params.id);
     if (foundProject) {
-      res.status(200).json(foundProject);
+      const project = {...foundProject, actions};
+      res.status(200).json(project);
     } else {
       res
         .status(404)
         .json({errorMessage: `Project with ID of ${req.params.id} not found.`});
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        errorMessage: 'Error while retrieving the project from the database.'
-      });
+    res.status(500).json({
+      errorMessage: 'Error while retrieving the project from the database.'
+    });
   }
 });
 

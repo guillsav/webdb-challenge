@@ -12,9 +12,7 @@ exports.up = function(knex, Promise) {
     .createTable('actions', tbl => {
       tbl.increments();
 
-      tbl.string('name', 128).notNullable();
-
-      tbl.text('description', 255).notNullable();
+      tbl.text('description', 128).notNullable();
 
       tbl.text('notes');
       tbl.boolean('completed').defaultTo(false);
